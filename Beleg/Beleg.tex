@@ -1,0 +1,47 @@
+\documentclass[
+paper = a4,
+fontsize = 11pt,
+numbers=noenddot,
+%BCOR = 5mm,
+headsepline = true,
+footsepline = true,
+plainfootsepline = true,
+%appendixprefix,
+parskip,								        % Text wird nicht automatisch eingerückt
+listof = totoc,
+bibliography = totoc,
+index = totoc,
+twoside = false
+]{scrreprt}
+
+\input{config}
+
+\begin{document}
+	\input{Deckblatt}
+	
+	\pagenumbering{Roman}
+	\tableofcontents
+	\newpage
+	\pagenumbering{arabic}
+	
+	\chapter{Einleitung}
+	Die in dieser Dokumentation beschriebene Implementierung von digitalen Filtern in VHDL \selectlanguage{english} (Very High Speed Integrated Circuit Hardware Description Language) \selectlanguage{ngerman}ist as Belegarbeit im Fach \textacutedbl Schaltkreisentwurf\textgravedbl entstanden. Dieses einführende Kapitel gibt einen Überblick über den Aufbau der zugehörigen Dokumentation.
+	
+	\section{Zielstellung}
+	Das Ziel dieser Belegarbeit ist die theoretische Behandlung der Funktionsweise digitaler Filter und deren praktische Umsetzung in VHDl. Es werden zwei unterschiedlich Varianten von Digitalen Filtern zum Zweck der Signalfilterung von EKG Signalen umgesetzt und miteinander verglichen.\\
+	Zur Umsetzung dessen wurde der Spartan3 XC3S1000 ausgewählt, da dieser in den Labors zum testen vorhanden ist.
+	\section{Aufbau der Arbeit}
+	Das 2. Kapitel befasst sich mit der Erläuterung digitaler Filter und deren Entwurf mit Python. Am Ende des Kapitels wird beispielhaft der Entwurf und die Umsetzung eines solchen Filters in der Python Suite Jupyter gezeigt.\\
+	\\
+	Die Realisierung mittels VHDL wird im 3. Kapitel verdeutlicht. Dafür werden alle Einzelmodule des Filters erklärt und vorgeführt. Anschließend wird der Filter durch Verwendung seiner teil Module Umgesetzt. Zum Schluss wird auf die Simulation eingegangen und Optimierungsmöglichkeiten werden besprochen.\\
+	\\
+	Das 4. Kapitel behandelt den Einsatz digitaler Filter und die vorgesehene Anwendungsmöglichkeit dieser speziellen Filter in der Signalverarbeitungskette eines EKG.
+	
+	\chapter{Digitale Filter}
+	Digitale Filter sind effiziente Methoden zur Filterung digitaler Signale. Dabei wird wie bei den Analogen Filtern zwischen Tief- und Hochpass Filtern, Bandpass und Bandsperre unterschieden. Außerdem lassen sich genau wie bei den Analogen Filtern auch verschiedenen Filtercharakteristika realisieren.
+
+	
+\end{document}
+
+\renewcommand{\rmdefault}{phv} % Arial
+\renewcommand{\sfdefault}{phv} % Arial

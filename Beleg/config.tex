@@ -1,0 +1,85 @@
+
+\usepackage[utf8]{inputenc}						% zur Verwendung von Umlauten
+\usepackage[english,ngerman]{babel}						% für Silbentrennung
+\usepackage[ngerman]{translator}			    % Mechan. zum Umsetzen sprachabh. Begriffe
+
+\usepackage{verbatim}							% for commentclocks
+\usepackage{tabto}								% tabulator 
+\usepackage{float}								% 
+
+\usepackage[official]{eurosym}					% for € Symbol
+
+\usepackage{amsmath}                            % für bestimmte mathematische Funktionen
+\usepackage{amssymb}                            %
+\usepackage{ziffer}                             % für intelligente Leerzeichenregelung nach Kommata in der Matheumgebung
+
+\usepackage[pdftex]{graphicx}					% für Grafiken
+\usepackage{graphicx}
+\usepackage{subfigure}							% Bilder nebeneinander anordnen
+\usepackage{wrapfig}                            % für in Fließtext eingebundene Abbildungen und Tabellen
+\graphicspath{{images/}} 						%Setting the graphicspath
+
+\usepackage{longtable}							% für Tabellen über mehrere Seiten
+
+\usepackage{ulem}                               % Schrift hervorheben
+\usepackage{color} 								% Schrift färben
+
+\usepackage{blindtext}							% Zum erstellen von Blintext -Dokumenten zur Formatierungsontrolle (Lorem Ipsum Dolor)
+
+\useunder{\uline}{\ul}{}                        % für Tabellen von http://www.tablesgenerator.com/#
+
+\usepackage{pdfpages}							% bindet PDFs ins Dokument ein
+
+\usepackage[bookmarksnumbered=true, colorlinks=false, pdfborder={0 0 0}]{hyperref}			% für Verlinkungen
+\usepackage[figure]{hypcap}					    %
+\hbadness=100000
+
+\usepackage[onehalfspacing]{setspace}           % Zeilenabstand von 1,5
+\usepackage[left=25mm, right=25mm, top=25mm, bottom=35mm]{geometry}
+
+
+\usepackage[nonumberlist,acronym,toc]{glossaries}   % für Abkürzungsverzeichnis
+\renewcommand*{\glspostdescription}{}				% Den Punkt am Ende jeder Beschreibung deaktivieren
+\deftranslation[to=German]{Acronyms}{Abkürzungsverze\usepackage[paper=a4paper,left=35mm,right=25mm,top=30mm,bottom=25mm]{geometry}ichnis}
+%\newglossary[slg]{symbolslist}{syi}{syg}{Symbolverzeichnis}	%Ein eigenes Symbolverzeichnis erstellen
+\makeglossaries										% Glossar-Befehle anschalten
+%\loadglsentries{Abkuerzungsverzeichnis.tex}
+
+\usepackage[final]{listofsymbols}               % für Symbolverzeichnis
+
+\usepackage{scrwfile}                           % für Anhangsverzeichnis
+\TOCclone[\contentsname~(\appendixname)]{toc}{atoc}
+\newcommand\StartAppendixEntries{}
+\AfterTOCHead[toc]{%
+  \renewcommand\StartAppendixEntries{\value{tocdepth}=-10000\relax}%
+}
+\AfterTOCHead[atoc]{%
+  \edef\maintocdepth{\the\value{tocdepth}}%
+  \value{tocdepth}=-10000\relax%
+  \renewcommand\StartAppendixEntries{\value{tocdepth}=\maintocdepth\relax}%
+}
+\newcommand*\appendixwithtoc{%
+  \cleardoublepage
+  \appendix
+  \addtocontents{toc}{\protect\StartAppendixEntries}
+  \listofatoc
+}
+
+\usepackage{textcomp}							% for symbols like "
+
+\usepackage{scrlayer-scrpage}                   % für Kopf- und Fußzeile
+\clearpairofpagestyles
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\newcommand{\chaptercolor}{gray}
+\addtokomafont{headsepline}{\color{gray}}
+\addtokomafont{footsepline}{\color{gray}}
+\renewcommand*{\chaptermarkformat}{}
+\automark[chapter]{chapter}
+\ihead{\color{\chaptercolor}\headmark}
+\ohead{\color{\chaptercolor}Jacob Ueltzen \& Trung Hoang Nguyen}
+\cfoot*{\color{\chaptercolor}\pagemark}
+
+%\ohead{Jacob Ueltzen}
+%\chead{}
+%\ihead{\headmark}
+%\automark{section}
