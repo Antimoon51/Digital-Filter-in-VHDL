@@ -13,6 +13,8 @@
 \usepackage{amssymb}                            %
 \usepackage{ziffer}                             % für intelligente Leerzeichenregelung nach Kommata in der Matheumgebung
 
+\usepackage{units}								% for /nicefrac
+
 \usepackage[pdftex]{graphicx}					% für Grafiken
 \usepackage{graphicx}
 \usepackage{subfigure}							% Bilder nebeneinander anordnen
@@ -74,7 +76,7 @@
 \addtokomafont{headsepline}{\color{gray}}
 \addtokomafont{footsepline}{\color{gray}}
 \renewcommand*{\chaptermarkformat}{}
-\automark[chapter]{chapter}
+\automark[section]{section}
 \ihead{\color{\chaptercolor}\headmark}
 \ohead{\color{\chaptercolor}Jacob Ueltzen \& Trung Hoang Nguyen}
 \cfoot*{\color{\chaptercolor}\pagemark}

@@ -1,0 +1,14 @@
+\begin{thebibliography}{1}
+
+\bibitem{Zoelzer}
+Udo Zölzer.
+\newblock {\em DAFX - Digital Audio Effects}.
+\newblock publisher, April 2002.
+
+\bibitem{IIRGenerator}
+Verschiedene Autoren.
+\newblock Sinusgenerator mit \uppercase{IIR-F}ilter, abgerufen am 11.03.2020.
+\newblock \\
+  \url{https://www.mikrocontroller.net/articles/Sinusgenerator_mit_IIR-Filter}.
+
+\end{thebibliography}

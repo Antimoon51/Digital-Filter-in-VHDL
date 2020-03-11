@@ -16,16 +16,24 @@ twoside = false
 
 \input{config}
 
+
+
+
+
 \begin{document}
 	\input{Deckblatt}
+	
 	
 	\pagenumbering{Roman}
 	\tableofcontents
 	\newpage
+	\listoffigures
+	\newpage
+	\setcounter{page}{1}
 	\pagenumbering{arabic}
 	
 	\chapter{Einleitung}
-	Die in dieser Dokumentation beschriebene Implementierung von digitalen Filtern in VHDL \selectlanguage{english} (Very High Speed Integrated Circuit Hardware Description Language) \selectlanguage{ngerman}ist as Belegarbeit im Fach \textacutedbl Schaltkreisentwurf\textgravedbl entstanden. Dieses einführende Kapitel gibt einen Überblick über den Aufbau der zugehörigen Dokumentation.
+	Die in dieser Dokumentation beschriebene Implementierung von digitalen Filtern in VHDL \selectlanguage{english} (Very High Speed Integrated Circuit Hardware Description Language) \selectlanguage{ngerman}ist as Belegarbeit im Fach \glqq Schaltkreisentwurf\grqq entstanden. Dieses einführende Kapitel gibt einen Überblick über den Aufbau der zugehörigen Dokumentation.
 	
 	\section{Zielstellung}
 	Das Ziel dieser Belegarbeit ist die theoretische Behandlung der Funktionsweise digitaler Filter und deren praktische Umsetzung in VHDl. Es werden zwei unterschiedlich Varianten von Digitalen Filtern zum Zweck der Signalfilterung von EKG Signalen umgesetzt und miteinander verglichen.\\
@@ -39,9 +47,57 @@ twoside = false
 	
 	\chapter{Digitale Filter}
 	Digitale Filter sind effiziente Methoden zur Filterung digitaler Signale. Dabei wird wie bei den Analogen Filtern zwischen Tief- und Hochpass Filtern, Bandpass und Bandsperre unterschieden. Außerdem lassen sich genau wie bei den Analogen Filtern auch verschiedenen Filtercharakteristika realisieren.
+	
+	\section{Grundlagen von FIR Filter}
+	FIR ist die englische Abkürzung für \selectlanguage{english}finite impulse response\selectlanguage{ngerman}. Dies heißt übersetzt endliche Impuls Antwort und bedeutet, dass wenn der Filter am Eingang mit einem Impuls angeregt wird, dass die Antwort des Filters, also das resultierende Ausgangs Signal endlich ist, also nach einer bestimmten Zeitspanne ausgeklungen ist.\\
+	\subsection{Struktur von FIR Filtern}
 
+	
+	%Beispielbild
+	\begin{figure}[!h]
+		\includegraphics[width=\linewidth]{FIRfilterStructure.png}
+		\caption{Struktur eines einfachen Moving Average Filters\cite{Zoelzer}}
+		\label{fig:FIRfilterStructure}
+	\end{figure}
+
+	Ein digitales Filter besteht immer aus einem kaskadierenden Verzögerungsglied und den Filterkoeffizienten, mit denen die Einzelnen Verzögerungsstufen Multipliziert werden. Der Ausgabewert des Filters ergibt sich dann aus der Addition der mit den Koeffizienten Multiplizierten verzögerten Eingabewerte. Dies wird auch als \selectlanguage{english}Feed Forward \selectlanguage{ngerman}bezeichnet.\\
+	\\
+	Im Bild \ref{fig:FIRfilterStructure} ist die Grundstruktur eines Filters zu sehen, das einen gleitenden Mittelwert der Eingabewerte Bildet. Dafür wird das Signal zweimal verzögert, sodass mit dem aktuellen Eingangssignal zu jedem Zeitpunkt drei Signal vorliegen. Dann wird jeden jedes Dieser Signale mit \nicefrac{1}{3} multipliziert und alles zum Ausgangssignal aufaddiert.\\
+	Damit wurde zu einem Zeitpunkt der Mittelwert eines Eingangssignals gebildet. Da sich das Ausgangssignal aber Zeitlich abhängig vom Eingangssignal auch ändert haben wir einen gleitenden Mittelwert (\selectlanguage{english}Moving Average)\selectlanguage{ngerman}. Die \nicefrac{1}{3} fungieren in diesem Fall als Filterkoefizienten\\
+	\\
+	Für kompliziertere Filter bleibt das Konzept identisch, doch werden mehr Verzögerungsstufen hinzugefügt und dementsprechend mehr Filterkoeffizienten.\\
+	Das Ausgangssignal eines solchen Filters lässt sich mit folgender Formel beschreiben:
+	$$y[n] = \sum_{k=0}^{N-1}h[k]\times x[n-k]$$
+	Dabei ist $h[k]$ der Wert des jeweiligen Filterkoeffizienten und $x[n-k]$ der Wert des dazu gehörenden verzögerten Eingangssignal.\\
+	Für die in Abbildung \ref{fig:FIRfilterStructure} gezeigte Struktur gilt also folgendes:
+	$$y[n] = h * x[n] + h * x[n-1] + h * x[n-2]\quad |h = \frac{1}{3}$$
+	  
+	\section{Grundlagen von IIR Filter}
+	Die Abkürzung IIR steht im Gegensatz zu den gerade besprochenen FIR Filtern für eine unendliche Impulsantwort (\selectlanguage{english}infinite impuls response)\selectlanguage{ngerman}. Ein einfacher Eingangsimpuls könnte bei einem solchen Filter also dafür sorgen dass de Ausgang des Filters nie wieder einen Ruhezustand erreicht. Dies kann mitunter dazu führen, dass das Filter sich aufschwingt und beginnt zu oszillieren, was zu in der Regel ungewollten Effekten führen kann.\footnote[1]{aber auch gelegentlich zur Schwingungserzeugung genutzt wird.\cite{IIRGenerator}}\\
+	Die Vorteile einer IIR Struktur sind jedoch, dass zumeist ein gleichwertiges Ergebnis wie mit einer IIR Struktur mit weit weniger Filterkoeffizienten erreicht werden kann. Dies bedeutet natürlich auch, dass dementsprechend weniger Rechenleistung verbraucht wird, da weniger Multiplikationen und Additionen durchgeführt werden müssen, um das selbe Ergebnis zu erlangen.
+	\subsection{Struktur von IIR Filtern}
+	Für die Struktur eines IIR Filters wird der bereits bekannten Struktur des FIR Filters noch ein \selectlanguage{english} Feed Back \selectlanguage{ngerman} hinzugefügt. Dies bedeutet, dass nicht nur Verzögerungen des Eingangssignal in die Bildung des Ausgangssignales mit einfließen, sondern auch verzögerungen des Ausgangssignales selbst. Durch diese Beschaffenheit entsteht auch die Möglichkeit der unendlich dauernden Impulsantwort.
+	
+	\begin{figure}[ht!]
+		\includegraphics[width=\linewidth]{IIRfilterStructure.png}
+		\caption{Struktur eines IIR Filter\cite{Zoelzer}}
+		\label{fig:IIRfilterStructure}
+	\end{figure}
+
+	Im Bild \ref{fig:IIRfilterStructure} ist die Strucktur eines IIR Filters zu sehen. Diese wird so wie sie hier zu sehen ist auch als Biquad Struktur bezeichnet. Hier ist zu sehen, dass sowohl das Eingangs, als auch das Ausgangssignal verzögert in das neue Ausgabesignal eingerechnet werden. Der obere Teil der Abbildung Zeigt dabei den \selectlanguage{english}Feed Forward \selectlanguage{ngerman}Teil des Filters, und der untere Teil den \selectlanguage{english}Feed Back.\selectlanguage{ngerman}\\
+	Für diese Art von Filter ist die Berechnungsvorschrift des Ausgangssignals wie folgt:
+	$$y[n] = \sum_{j=1}^{M}a_j y[n-j] + \sum_{i=0}^{N}b_i x[n-i]$$ und die allgemeine Differenzengleichung ist: 
+	$$y[n] = b_0x[n]+b_1x[n-1]+b_2x[n-2]+...+b_Nx[n-N]+a_1y[n-1]+a_2y[n-2]+...+a_My[n-M]$$
+	\newpage
+	\section{Entwurf digitaler Filter}
+
+
+
+
+
+
+	\bibliography{Literatur}		% Erzeugt Literaturverzeichniss
+	\bibliographystyle{unsrt}
 	
 \end{document}
 
-\renewcommand{\rmdefault}{phv} % Arial
-\renewcommand{\sfdefault}{phv} % Arial
