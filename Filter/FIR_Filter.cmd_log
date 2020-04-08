@@ -1,3 +1,0 @@
-xst -intstyle ise -ifn "U:/FPGA_Schaltkreisentwurf/FIR_filter_2/Filter/FIR_Filter.xst" -ofn "U:/FPGA_Schaltkreisentwurf/FIR_filter_2/Filter/FIR_Filter.syr" 
-xst -intstyle ise -ifn "U:/FPGA_Schaltkreisentwurf/FIR_filter_2/Filter/FIR_Filter.xst" -ofn "U:/FPGA_Schaltkreisentwurf/FIR_filter_2/Filter/FIR_Filter.syr" 
-xst -intstyle ise -ifn "U:/FPGA_Schaltkreisentwurf/FIR_filter_2/Filter/FIR_Filter.xst" -ofn "U:/FPGA_Schaltkreisentwurf/FIR_filter_2/Filter/FIR_Filter.syr" 
