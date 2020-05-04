@@ -18,33 +18,32 @@ LIBRARY IEEE;
 
 ENTITY FIR_Filter_TB IS
 	GENERIC(
-		input_width	: positive	:= 16;
-		output_width	: positive	:= 32
+		input_width		: positive	:= 16;
+		output_width		: positive	:= 32
 	);
 END FIR_Filter_TB;
  
 ARCHITECTURE behavior OF FIR_Filter_TB IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
- 
     COMPONENT FIR_Filter
-	 GENERIC(
-			input_width		: positive	:= 16;
-			output_width		: positive	:= 32;
-			taps			: positive	:= 128;
-			coefficient_width 	: positive	:= 16 
-		  );
-    PORT(
-         D_IN 			: IN  signed(input_width-1 downto 0);
-         D_OUT 			: OUT signed(output_width-1 downto 0);
-         Clk 			: IN  std_logic;
-         sync_reset 		: IN  std_logic
+	GENERIC(
+		input_width		: positive	:= 16;
+		output_width		: positive	:= 32;
+		taps			: positive	:= 128;
+		coefficient_width 	: positive	:= 16 
+	);
+    	PORT(
+         	D_IN 			: IN  signed(input_width-1 downto 0);
+         	D_OUT 			: OUT signed(output_width-1 downto 0);
+         	Clk 			: IN  std_logic;
+         	sync_reset 		: IN  std_logic
         );
     END COMPONENT;
     
 
    --Inputs
-   signal D_IN 		: signed(input_width-1 downto 0) := (others => '0');				-- initiate signal := '00..0'
+   signal D_IN 		: signed(input_width-1 downto 0) := (others => '0');			-- initiate signal := '00..0'
    signal Clk 		: std_logic := '0';
    signal sync_reset 	: std_logic := '1';
 
@@ -53,7 +52,7 @@ ARCHITECTURE behavior OF FIR_Filter_TB IS
    signal output_ready  : std_logic := '0';
  
    -- Clock period definitions
-   constant Clk_period 	: time := 1 ms;                                       					-- Clock frequency = 1000Hz  
+   constant Clk_period 	: time := 1 ms;                                       			-- Clock frequency = 1000Hz  
 	
    -- Files
    file input_txt: TEXT open Read_mode is "ECG_signal.txt";
@@ -68,16 +67,16 @@ BEGIN
 			output_width		=>	32,
 			taps			=>	128,
 			coefficient_width 	=> 	16 
-		  )
+	)
 	PORT MAP(
-          		D_IN 		=> D_IN,
-          		D_OUT 		=> D_OUT,
-          		Clk 		=> Clk,
-          		sync_reset 	=> sync_reset
-        	);
+          		D_IN 			=> 	D_IN,
+          		D_OUT 			=> 	D_OUT,
+          		Clk 			=> 	Clk,
+          		sync_reset 		=> 	sync_reset
+        );
 
 	-- Clock process definitions
-     	Taktgeber: process(clk, sync_reset)
+     	Clock: process(clk, sync_reset)
        	begin 
   		if sync_reset = '1' then 
   			Clk  <= '0';
