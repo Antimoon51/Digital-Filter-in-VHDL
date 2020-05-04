@@ -35,17 +35,17 @@ end FIR_Filter;
 architecture Filter_Behavioral of FIR_Filter is
 
 component RisingEdge_Register_SyncReset is						
-		generic(  
-				input_width	: positive	:= 16;
-				output_width	: positive	:= 16 		
+	generic(  
+		input_width	: positive	:= 16;
+		output_width	: positive	:= 16 		
    		); 
-   	        port(  
-				Q 		: out   signed(input_width-1 downto 0);
-				D 		: in 	signed(output_width-1 downto 0);
-				Clk 		: in 	std_logic;    
-				sync_reset	: in 	std_logic
+   	port(  
+		Q 		: out   signed(input_width-1 downto 0);
+		D 		: in 	signed(output_width-1 downto 0);
+		Clk 		: in 	std_logic;    
+		sync_reset	: in 	std_logic
    );  
- end component RisingEdge_Register_SyncReset;
+end component RisingEdge_Register_SyncReset;
 
 -- Type definition
 -- array[signed,signed,..]
