@@ -13,16 +13,15 @@
 -------------------------------------------------------------------------------------------------------------
 library IEEE;
 	use IEEE.STD_LOGIC_1164.ALL;
-	use IEEE.NUMERIC_STD.ALL;
-	
+	use IEEE.NUMERIC_STD.ALL;	
 	use WORK.FIR_Filter_2_package.ALL;
 
 entity FIR_Filter_2 is
 
 	port(
 		input_port		: in 	signed(input_width-1 downto 0);
-		output_port		: out signed(output_width-1 downto 0);
-		clk 				: in 	std_logic;
+		output_port		: out 	signed(output_width-1 downto 0);
+		clk 			: in 	std_logic;
 		sync_reset 		: in 	std_logic
 	);
 end FIR_Filter_2;
