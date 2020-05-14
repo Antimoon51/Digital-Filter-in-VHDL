@@ -25,21 +25,22 @@ ARCHITECTURE behavior OF testbench IS
 
 -- Component Declaration
    COMPONENT FIR_Filter_2
-   PORT(
-            input_port		: in 	signed(input_width-1 downto 0);
-				output_port		: out signed(output_width-1 downto 0);
-				clk 				: in 	std_logic;
-				sync_reset 		: in 	std_logic
+   	PORT(
+            	input_port		: in 	signed(input_width-1 downto 0);
+		output_port		: out 	signed(output_width-1 downto 0);
+		clk 			: in 	std_logic;
+		sync_reset 		: in 	std_logic
              );
    END COMPONENT;
    --Inputs
    signal input_port 	: signed(input_width-1 downto 0);			
-   signal Clk 				: std_logic;
+   signal Clk 		: std_logic;
    signal sync_reset 	: std_logic;
 
    --Outputs
    signal output_port 	: signed(output_width-1 downto 0);
    signal output_ready  : std_logic := '0';
+
    -- Clock period definitions
    constant Clk_period 	: time := 1 ms;                                       				  
 	
@@ -51,11 +52,11 @@ ARCHITECTURE behavior OF testbench IS
 BEGIN
 
 -- Component Instantiation
-        uut: FIR_Filter_2 PORT MAP(
-                input_port => input_port,
-                output_port => output_port,
-					 clk => clk,
-					 sync_reset => sync_reset
+uut: FIR_Filter_2 PORT MAP(
+      	input_port	=> input_port,
+      	output_port 	=> output_port,
+	clk 		=> clk,
+	sync_reset 	=> sync_reset
         );
 
 -- Clock process definitions
@@ -70,31 +71,31 @@ Clock: process(clk, sync_reset)
 			
 sync_reset <= '0', '1' after 200 ns;
 	
-  	-- Read data by rising edge of clock
-	DATA_input: process(clk)
+-- Read data by rising edge of clock
+DATA_input: process(clk)
 	variable my_input_line 	: LINE;  
 	variable input_values	: real;		
 	begin 
-		if sync_reset = '0' then
-			input_port 		<= (others => '0');
-			output_ready 	<= '0';
-		elsif rising_edge(clk) then
-			readline(input_txt, my_input_line);  						
-         read(my_input_line, input_values);          					
-			input_port <= to_signed(integer(input_values*512.0*1000.0),input_port'length);   				
-         output_ready 	<= '1';  
-      end if;  
-   end process;
+	if sync_reset = '0' then
+		input_port 	<= (others => '0');
+		output_ready 	<= '0';
+	elsif rising_edge(clk) then
+		readline(input_txt, my_input_line);  						
+         	read(my_input_line, input_values);          					
+		input_port <= to_signed(integer(input_values*512.0*1000.0),input_port'length);   				
+         	output_ready 	<= '1';  
+      	end if;  
+end process;
 		
-	-- Write data by falling edge of clock
-	DATA_ouput: process(clk)
+-- Write data by falling edge of clock
+DATA_ouput: process(clk)
 	variable my_output_line : LINE;  
 	begin
-		if falling_edge(clk) then
-			if output_ready = '1' then
-				write(my_output_line, real(to_integer(output_port))/(32768.0*10.0)) ;  		
-            writeline(output_txt, my_output_line);                               	
-         end if;  
-      end if;  
-   end process;
+	if falling_edge(clk) then
+		if output_ready = '1' then
+			write(my_output_line, real(to_integer(output_port))/(32768.0*10.0)) ;  		
+            		writeline(output_txt, my_output_line);                               	
+         	end if;  
+      	end if;  
+	end process;
 END;
