@@ -47,21 +47,21 @@ begin
 	elsif rising_edge(clk) then
 		add := (others => '0');
 		shift_inputvalues(0) <= input_port;
-		MULT: for i in 0 to taps-1 loop
-					if i < taps/2 then
-						products(i) := shift_inputvalues(i) * coefficient(i);
-					else
-						products(i) := shift_inputvalues(i) * coefficient(taps-i-1);
-					end if;
-				end loop;
-				add := products(0);
-		ADDA: for i in 1 to taps-1 loop
-					add := add + products(i);
-				end loop;
+		MULT: 	for i in 0 to taps-1 loop
+				if i < taps/2 then
+					products(i) := shift_inputvalues(i) * coefficient(i);
+				else
+					products(i) := shift_inputvalues(i) * coefficient(taps-i-1);
+				end if;
+			end loop;
+		add := products(0);
+		ADDA: 	for i in 1 to taps-1 loop
+				add := add + products(i);
+			end loop;
 		output_port <= add(input_width+coefficient_width-1 downto coefficient_width);
-		SHIFT:for i in 1 to taps-1 loop
-					shift_inputvalues(taps-i) <= shift_inputvalues(taps-i-1);
-				end loop;
+		SHIFT:	for i in 1 to taps-1 loop
+				shift_inputvalues(taps-i) <= shift_inputvalues(taps-i-1);
+			end loop;
 	end if;
 	end process;
 
